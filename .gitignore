@@ -1,0 +1,5 @@
+venv
+catfeeder.egg-info
+.DS_Store
+.coverage
+__pycache__

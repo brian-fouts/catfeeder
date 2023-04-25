@@ -1,5 +1,6 @@
 from unittest.mock import MagicMock
 
+
 def test_catfeeder_emits_schedule_event(catfeeder, patch_datetime_now):
     """
     GIVEN a CatFeeder

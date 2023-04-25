@@ -1,6 +1,7 @@
 import datetime
 from unittest.mock import MagicMock
 
+
 def test_schedule_emits_event(event_manager, schedule, patch_datetime_now):
     """
     GIVEN an EventManager

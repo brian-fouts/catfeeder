@@ -1,4 +1,5 @@
 import os
+
 import pytest
 
 
@@ -13,4 +14,5 @@ def catfeeder_config():
 @pytest.fixture
 def event_manager():
     from catfeeder.event import EventManager
+
     return EventManager()

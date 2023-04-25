@@ -9,7 +9,6 @@ if __name__ == "__main__":
         include_package_data=True,
         install_requires=[
             "pyyaml",
-            #"RPi.GPIO"
         ],
         extras_require={
             "test": [
@@ -20,6 +19,7 @@ if __name__ == "__main__":
                 "mypy",
                 "black",
                 "isort",
+                "types-PyYAML"
             ],
         },
         entry_points=dict(

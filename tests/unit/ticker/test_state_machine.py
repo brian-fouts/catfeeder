@@ -1,5 +1,6 @@
 from catfeeder.ticker import TickerActivatedState, TickerDeactivatedState
 
+
 def test_initial_state(state_machine):
     """
     GIVEN a state machine
@@ -7,6 +8,7 @@ def test_initial_state(state_machine):
     THEN the initial state is TickerDeactivatedState
     """
     assert state_machine.state.__class__ == TickerDeactivatedState
+
 
 def test_noop_transition(state_machine):
     """
@@ -17,6 +19,7 @@ def test_noop_transition(state_machine):
     state_machine.on_transition(False)
     assert state_machine.state.__class__ == TickerDeactivatedState
 
+
 def test_activate_transition(state_machine):
     """
     GIVEN a state machine
@@ -25,6 +28,7 @@ def test_activate_transition(state_machine):
     """
     state_machine.on_transition(True)
     assert state_machine.state.__class__ == TickerActivatedState
+
 
 def test_deactivate_transition(state_machine):
     """

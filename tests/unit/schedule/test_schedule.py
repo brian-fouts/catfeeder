@@ -30,6 +30,7 @@ def test_next_time_now(schedule, patch_datetime_now):
     assert schedule.next_time().hour == 8
     assert schedule.next_time().minute == 0
 
+
 def test_next_time_tomorrow(schedule, patch_datetime_now):
     """
     GIVEN a schedule with an item at 8:00
@@ -65,6 +66,7 @@ def test_update_doesnt_publish(schedule, patch_datetime_now, event_manager):
     schedule.add(8, 0)
     schedule.update(event_manager)
     event_manager.publish.assert_not_called()
+
 
 def test_update_publish(schedule, patch_datetime_now, event_manager):
     """

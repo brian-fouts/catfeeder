@@ -6,5 +6,5 @@ schedule:
 pin_mapping:
   motor: 22
   ticker: 5
-ticker:
+motor:
   ticks_per_serving: 5

@@ -1,7 +1,8 @@
 import pytest
 
-@pytest.mark.parametrize("pin_number", [1, 2, 3], ids=lambda p:p)
-@pytest.mark.parametrize("pin_value", [True, False], ids=lambda v:v)
+
+@pytest.mark.parametrize("pin_number", [1, 2, 3], ids=lambda p: p)
+@pytest.mark.parametrize("pin_value", [True, False], ids=lambda v: v)
 def test_pin_manager(pin_manager, pin_number, pin_value):
     """
     GIVEN a pin manager

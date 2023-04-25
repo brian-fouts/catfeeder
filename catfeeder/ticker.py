@@ -1,8 +1,14 @@
 import logging
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from catfeeder.event import EventManager
+    from catfeeder.gpio import PinManager
 
 
 class TickerState:
     """Base class for Ticker state machine states"""
+
     def on_transition(self, is_activated: bool) -> None:
         raise NotImplementedError()
 
@@ -12,6 +18,7 @@ class TickerState:
 
 class TickerActivatedState(TickerState):
     """State for when the Ticker is activated"""
+
     def __init__(self, fsm):
         self.fsm = fsm
 
@@ -22,12 +29,13 @@ class TickerActivatedState(TickerState):
 
 class TickerDeactivatedState(TickerState):
     """State for when the Ticker is deactivated"""
+
     def __init__(self, fsm):
         self.fsm = fsm
 
     def on_enter(self) -> None:
         self.fsm.event_manager.publish(self.fsm.EVENT_TICKER_INCREMENTED)
-    
+
     def on_transition(self, is_activated: bool) -> None:
         if is_activated:
             self.fsm.state = TickerActivatedState(self.fsm)
@@ -35,14 +43,14 @@ class TickerDeactivatedState(TickerState):
 
 class TickerStateMachine:
     """State machine for the Ticker"""
+
     EVENT_TICKER_INCREMENTED = "ticker:incremented"
 
     def __init__(self, initial_state: bool, event_manager: "EventManager"):
         self.event_manager = event_manager
-        if initial_state:
-            self._state = TickerActivatedState(self)
-        else:
-            self._state = TickerDeactivatedState(self)
+        self._state: TickerState = (
+            TickerActivatedState(self) if initial_state else TickerDeactivatedState(self)
+        )
 
     def on_transition(self, is_activated: bool):
         self.state.on_transition(is_activated)
@@ -50,7 +58,7 @@ class TickerStateMachine:
     @property
     def state(self) -> TickerState:
         return self._state
-    
+
     @state.setter
     def state(self, state: TickerState) -> None:
         self._state = state
@@ -60,6 +68,7 @@ class TickerStateMachine:
 
 class Ticker:
     """Emits events when ticker hardware transitions from high to low"""
+
     def __init__(self, pin_number: int, pin_manager: "PinManager", event_manager: "EventManager"):
         self.pin_manager = pin_manager
         self.pin_number = pin_number
@@ -73,5 +82,8 @@ class Ticker:
     def update(self) -> None:
         self.state_machine.on_transition(self.read_state())
 
-def ticker_factory(pin_number: int, pin_manager: "PinManager", event_manager: "EventManager") -> Ticker:
-	return Ticker(pin_number, pin_manager, event_manager)
+
+def ticker_factory(
+    pin_number: int, pin_manager: "PinManager", event_manager: "EventManager"
+) -> Ticker:
+    return Ticker(pin_number, pin_manager, event_manager)

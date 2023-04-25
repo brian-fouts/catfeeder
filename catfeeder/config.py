@@ -1,15 +1,21 @@
 from dataclasses import dataclass, field
 from typing import List
+
 import yaml
+
 
 @dataclass
 class PinMapping:
+    """Mapping of pins to components"""
+
     motor: int
     ticker: int
+
 
 @dataclass
 class ScheduleItemConfig:
     """Configuration for schedule item"""
+
     hour: int
     minute: int
 
@@ -17,6 +23,7 @@ class ScheduleItemConfig:
 @dataclass
 class ScheduleConfig:
     """Configuration for schedule"""
+
     items: List[ScheduleItemConfig]
 
     def __post_init__(self):
@@ -26,26 +33,31 @@ class ScheduleConfig:
 
         self.items = items
 
+
 @dataclass
-class TickerConfig:
+class MotorConfig:
+    """Configuration for motor controller"""
+
     ticks_per_serving: int
 
 
 @dataclass
 class CatfeederConfig:
+    """Configuration for catfeeder"""
+
     schedule: ScheduleConfig
     pin_mapping: PinMapping
-    ticker: TickerConfig
+    motor: MotorConfig
 
     def __post_init__(self):
         self.schedule = ScheduleConfig(items=self.schedule)
         self.pin_mapping = PinMapping(**self.pin_mapping)
-        self.ticker = TickerConfig(**self.ticker)
+        self.motor = MotorConfig(**self.motor)
 
 
 def config_factory(config_path: str) -> CatfeederConfig:
     """Create a CatfeederConfig from a yaml file"""
-    with open(config_path, 'r') as f:
+    with open(config_path, "r") as f:
         config_data = yaml.safe_load(f)
 
     return CatfeederConfig(**config_data)

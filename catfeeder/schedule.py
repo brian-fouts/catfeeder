@@ -1,8 +1,15 @@
 import datetime
+from typing import TYPE_CHECKING
 
 from catfeeder.config import CatfeederConfig
 
+if TYPE_CHECKING:
+    from catfeeder.event import EventManager
+
+
 class ScheduleItem:
+    """Represents a single item in the schedule"""
+
     def __init__(self, hour: int, minute: int):
         self.hour = hour
         self.minute = minute
@@ -16,7 +23,10 @@ class ScheduleItem:
             next_time += datetime.timedelta(days=1)
         return next_time
 
+
 class Schedule:
+    """Represents a schedule of items to be executed"""
+
     EVENT_EXECUTE = "schedule:execute"
 
     def __init__(self):

@@ -6,10 +6,28 @@ There are two main hardware components that are integrated with the software via
 - A tick counter, which determines how many units of food has been dispensed
 
 # Installation
-```pip install -e ".[test]"```
+```
+$ pip install -e ".[test]"
+```
 
 # Test
-```pytest```
+```
+$ pytest
+```
+
+# Lint
+```
+$ black tests catfeeder
+$ isort tests catfeeder
+$ mypy catfeeder; pytest
+```
 
 # Run
-```$ catfeeder```
+```
+$ catfeeder
+```
+
+# Run Instructions
+```
+$ catfeeder --help
+```

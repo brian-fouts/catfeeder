@@ -1,13 +1,16 @@
-import pytest
-from unittest.mock import MagicMock
 import logging
+from unittest.mock import MagicMock
+
+import pytest
 
 
 @pytest.fixture
 def patch_datetime_now(monkeypatch):
     import datetime
+
     class PatchedDatetime(datetime.datetime):
         _now = datetime.datetime.now()
+
         @classmethod
         def now(cls):
             return cls._now
@@ -16,7 +19,7 @@ def patch_datetime_now(monkeypatch):
         def set_now(cls, new_now):
             cls._now = new_now
 
-    monkeypatch.setattr('datetime.datetime', PatchedDatetime)
+    monkeypatch.setattr("datetime.datetime", PatchedDatetime)
     return PatchedDatetime
 
 
@@ -62,4 +65,5 @@ def gpio():
 @pytest.fixture
 def pin_manager(gpio):
     from catfeeder.gpio import pin_manager_factory
+
     return pin_manager_factory(gpio)

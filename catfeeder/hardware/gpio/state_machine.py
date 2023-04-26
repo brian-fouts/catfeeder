@@ -21,7 +21,7 @@ class ActivatedBoolPinState(BoolPinState):
     """State for when the pin is activated"""
 
     def on_enter(self, event_manager: EventManager) -> None:
-        event_manager.publish(event_manager.pin_activated_event_name(self.fsm.pin_number))
+        event_manager.publish(event_manager.get_pin_activated_event_name(self.fsm.pin_number))
 
     def on_transition(self, is_activated: bool, event_manager: "EventManager") -> None:
         if not is_activated:
@@ -32,7 +32,7 @@ class DeactivatedBoolPinState(BoolPinState):
     """State for when the pin is deactivated"""
 
     def on_enter(self, event_manager: EventManager) -> None:
-        event_manager.publish(event_manager.pin_deactivated_event_name(self.fsm.pin_number))
+        event_manager.publish(event_manager.get_pin_deactivated_event_name(self.fsm.pin_number))
 
     def on_transition(self, is_activated: bool, event_manager: EventManager) -> None:
         if is_activated:

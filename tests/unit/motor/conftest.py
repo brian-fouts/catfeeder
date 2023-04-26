@@ -20,6 +20,6 @@ def pin_manager():
 
 @pytest.fixture
 def motor(pin_number, pin_manager):
-    from catfeeder.motor import motor_factory
+    from catfeeder.hardware.controller.motor import motor_factory
 
     return motor_factory(pin_number, pin_manager)

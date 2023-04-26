@@ -22,10 +22,10 @@ class EventManager:
 
         return len(self._subscriptions[event_name])
 
-    def pin_activated_event_name(self, pin_number: int) -> str:
+    def get_pin_activated_event_name(self, pin_number: int) -> str:
         """Returns the event name for when the pin is activated"""
         return f"{EVENT_PIN_ACTIVATED}:{pin_number}"
 
-    def pin_deactivated_event_name(self, pin_number: int) -> str:
+    def get_pin_deactivated_event_name(self, pin_number: int) -> str:
         """Returns the event name for when the pin is deactivated"""
         return f"{EVENT_PIN_DEACTIVATED}:{pin_number}"

@@ -45,6 +45,7 @@ class MotorConfig:
 class PinManagerConfig:
     """Configuration for pin manager"""
 
+    io: str
     input_pins: List[int] = field(default_factory=list)
     output_pins: List[int] = field(default_factory=list)
 

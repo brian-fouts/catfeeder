@@ -3,8 +3,9 @@ import time
 
 from catfeeder.config import CatfeederConfig
 from catfeeder.event import EventManager
+from catfeeder.hardware.controller.motor import motor_controller_factory, motor_factory
+from catfeeder.hardware.gpio.io import io_factory
 from catfeeder.hardware.gpio.pin_manager import PinManager, pin_manager_factory
-from catfeeder.motor import motor_controller_factory, motor_factory
 from catfeeder.schedule import Schedule, schedule_factory
 
 
@@ -47,15 +48,16 @@ def setup_motor(catfeeder_config, schedule, pin_manager, event_manager):
     motor_controller = motor_controller_factory(catfeeder_config, motor)
     event_manager.subscribe(schedule.EVENT_EXECUTE, motor_controller.on_schedule_execute)
     event_manager.subscribe(
-        event_manager.pin_deactivated_event_name(catfeeder_config.pin_mapping.ticker),
+        event_manager.get_pin_deactivated_event_name(catfeeder_config.pin_mapping.ticker),
         motor_controller.on_ticker_incremented,
     )
 
 
-def catfeeder_factory(catfeeder_config, gpio) -> Catfeeder:
+def catfeeder_factory(catfeeder_config) -> Catfeeder:
     """Create a Catfeeder from a config"""
     schedule = schedule_factory(catfeeder_config)
     event_manager = EventManager()
+    gpio = io_factory(catfeeder_config.pin_manager.io)
     pin_manager = pin_manager_factory(gpio, catfeeder_config)
     setup_motor(catfeeder_config, schedule, pin_manager, event_manager)
     return Catfeeder(catfeeder_config, schedule, event_manager, pin_manager)

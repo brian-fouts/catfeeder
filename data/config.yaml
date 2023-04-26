@@ -9,6 +9,7 @@ pin_mapping:
 motor:
   ticks_per_serving: 5
 pin_manager:
+  io: gpio
   input_pins:
     - 5
   output_pins:

@@ -19,7 +19,6 @@ $ pytest
 ```
 $ black tests catfeeder
 $ isort tests catfeeder
-$ mypy catfeeder; pytest
 ```
 
 # Run

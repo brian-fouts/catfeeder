@@ -10,7 +10,7 @@ def pin_number():
 
 @pytest.fixture
 def pin_manager():
-    from catfeeder.gpio import PinManager
+    from catfeeder.hardware.gpio.pin_manager import PinManager
 
     pin_manager = MagicMock(spec=PinManager)
     pin_manager.gpio = MagicMock()

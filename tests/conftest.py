@@ -1,4 +1,5 @@
 import logging
+import os
 from unittest.mock import MagicMock
 
 import pytest
@@ -63,7 +64,15 @@ def gpio():
 
 
 @pytest.fixture
-def pin_manager(gpio):
-    from catfeeder.gpio import pin_manager_factory
+def catfeeder_config():
+    from catfeeder.config import config_factory
 
-    return pin_manager_factory(gpio)
+    config_path = os.path.join("tests", "data", "test_config.yaml")
+    return config_factory(config_path)
+
+
+@pytest.fixture
+def pin_manager(gpio, catfeeder_config):
+    from catfeeder.hardware.gpio.pin_manager import pin_manager_factory
+
+    return pin_manager_factory(gpio, catfeeder_config)

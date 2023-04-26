@@ -2,7 +2,7 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from catfeeder.config import CatfeederConfig
-    from catfeeder.gpio import PinManager
+    from catfeeder.hardware.gpio.pin_manager import PinManager
 
 
 class Motor:
@@ -11,7 +11,6 @@ class Motor:
     def __init__(self, pin_number: int, pin_manager: "PinManager"):
         self.pin_number = pin_number
         self.pin_manager = pin_manager
-        self.pin_manager.setup_pin(self.pin_number, self.pin_manager.gpio.OUT)
 
     def start(self) -> None:
         self.pin_manager.write_pin(self.pin_number, True)

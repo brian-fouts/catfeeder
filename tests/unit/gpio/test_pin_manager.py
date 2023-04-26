@@ -13,6 +13,7 @@ def test_pin_manager(pin_manager, pin_number, pin_value):
         AND the pin is read from
     THEN the correct pin value is returned
     """
-    pin_manager.setup_pin(pin_number, pin_manager.gpio.OUT)
+    pin_manager.setup_output_pin(pin_number)
+    pin_manager.setup_input_pin(pin_number)
     pin_manager.write_pin(pin_number, pin_value)
     assert pin_manager.read_pin(pin_number) == pin_value

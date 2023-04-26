@@ -14,7 +14,7 @@ def event_manager():
 
 
 @pytest.fixture
-def state_machine(event_manager):
-    from catfeeder.ticker import TickerStateMachine
+def state_machine(pin_number):
+    from catfeeder.hardware.gpio.state_machine import PinStateMachine
 
-    return TickerStateMachine(False, event_manager)
+    return PinStateMachine(False, pin_number)

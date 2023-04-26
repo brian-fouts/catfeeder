@@ -4,16 +4,6 @@ from catfeeder.catfeeder import catfeeder_factory
 from catfeeder.config import config_factory
 
 
-def get_gpio():
-    """Attempts to import RPi.GPIO and exits if it fails"""
-    try:
-        import RPi.GPIO as GPIO  # type: ignore
-    except ImportError:
-        print("Could not import RPi.GPIO. Are you running on a Raspberry Pi?")
-        exit(1)
-    return GPIO
-
-
 def main():
     import argparse
 
@@ -31,7 +21,7 @@ def main():
         exit(1)
 
     catfeeder_config = config_factory(args.config_path)
-    catfeeder = catfeeder_factory(catfeeder_config, get_gpio())
+    catfeeder = catfeeder_factory(catfeeder_config)
     catfeeder.run()
 
 

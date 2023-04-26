@@ -42,17 +42,28 @@ class MotorConfig:
 
 
 @dataclass
+class PinManagerConfig:
+    """Configuration for pin manager"""
+
+    io: str
+    input_pins: List[int] = field(default_factory=list)
+    output_pins: List[int] = field(default_factory=list)
+
+
+@dataclass
 class CatfeederConfig:
     """Configuration for catfeeder"""
 
     schedule: ScheduleConfig
     pin_mapping: PinMapping
     motor: MotorConfig
+    pin_manager: PinManagerConfig
 
     def __post_init__(self):
         self.schedule = ScheduleConfig(items=self.schedule)
         self.pin_mapping = PinMapping(**self.pin_mapping)
         self.motor = MotorConfig(**self.motor)
+        self.pin_manager = PinManagerConfig(**self.pin_manager)
 
 
 def config_factory(config_path: str) -> CatfeederConfig:

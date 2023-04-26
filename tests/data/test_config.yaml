@@ -8,3 +8,9 @@ pin_mapping:
   ticker: 5
 motor:
   ticks_per_serving: 5
+pin_manager:
+  io: emulator
+  input_pins:
+    - 5
+  output_pins:
+    - 22
